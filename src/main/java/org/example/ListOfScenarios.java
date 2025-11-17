@@ -1,10 +1,12 @@
 package org.example;
 
+import java.util.List;
+
 public interface ListOfScenarios {
 
-    matchesPlayedPerYear();
-    matchesWonByAllTeams();
-    etrasConcededIn2016();
-    topEconomicalBowler2015();
+    void matchesPlayedPerYear(List<String[]> matches);
+    void matchesWonByAllTeams();
+    void etrasConcededIn2016();
+    void topEconomicalBowler2015();
 
 }
