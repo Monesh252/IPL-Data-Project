@@ -9,5 +9,6 @@ public interface ListOfScenarios {
     void matchesWonByAllTeams(List<String[]> matches);
     void etrasConcededPerYear(List<String[]> matches,List<String[]> deliveries, int year);
     void topEconomicalBowler2015(List<String[]> matches, List<String[]> deliveries, int year);
+    void highestRunGetterInEachYear(List<String[]> matches, List<String[]> deliveries, int year);
 
 }

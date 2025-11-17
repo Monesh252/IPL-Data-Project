@@ -13,7 +13,6 @@ import com.opencsv.exceptions.CsvException;
 
 public class IPLProject implements ListOfScenarios{
 
-
     public static void main(String[] args ) {
         List<String[]> matches = new ArrayList<>();
         List<String[]> deliveries = new ArrayList<>();
@@ -33,12 +32,6 @@ public class IPLProject implements ListOfScenarios{
         } catch (CsvException e) {
             throw new RuntimeException(e);
         }
-
-        IPLProject ipl = new IPLProject();
-//        ipl.matchesPlayedPerYear(matches);
-        ipl.topEconomicalBowler2015(matches,deliveries,2009);
-        System.out.println(23.00 <3.04);
-
     }
 
     public void matchesPlayedPerYear(List<String[]> matches){
@@ -131,5 +124,42 @@ public class IPLProject implements ListOfScenarios{
         for(Map.Entry<String,Double> sorted : sortedEconomy.entrySet()){
             System.out.println(sorted.getKey() + " -> " + String.format("%.2f" ,sorted.getValue()));
         }
+    }
+
+    public  void highestRunGetterInEachYear(List<String[]> matches, List<String[]> deliveries, int year) {
+       //cb0969@canarabank.com
+       Set<Integer> set = new HashSet<>();
+       for (String[] str : matches) {
+           Match m = new Match(str);
+           if (m.getSeason() == year) {
+               set.add(m.getId());
+           }
+       }
+
+       HashMap<String, Integer> totalRuns = new HashMap<>();
+       for (String[] str : deliveries) {
+           Deliveries d = new Deliveries(str);
+           if (set.contains(d.getMatchId())) {
+               totalRuns.put(d.getBatsman(), totalRuns.getOrDefault(d.getBatsman(), 0) + d.getTotalRuns());
+           }
+       }
+
+       List<Map.Entry<String,Integer>> list = new ArrayList<>(totalRuns.entrySet());
+       list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+       Map<String,Integer> sortedEconomy = new LinkedHashMap<>();
+       for(Map.Entry<String,Integer> run : list){
+           sortedEconomy.put(run.getKey(),run.getValue());
+       }
+
+       int n = 0;
+       for(Map.Entry<String,Integer> m : sortedEconomy.entrySet()){
+           if(n<=0) {
+               System.out.println(m.getKey() + " -> " + m.getValue());
+               n++;
+           }
+       }
+
+
+
     }
 }
