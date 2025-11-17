@@ -26,7 +26,8 @@ public class IPLProject implements ListOfScenarios{
             String line;
             matches = matchesReader.readAll();
             deliveries = deliveriesReader.readAll();
-            ipl.matchesPlayedPerYear(matches);
+//            ipl.matchesPlayedPerYear(matches);
+            ipl.matchesWonByAllTeams(matches);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (CsvException e) {
@@ -40,13 +41,24 @@ public class IPLProject implements ListOfScenarios{
             Match m = new Match(matches.get(i));
             hm.put(m.getSeason(),hm.getOrDefault(m.getSeason(), 0)+1);
         }
+
         for(Map.Entry<Integer,Integer> m : hm.entrySet()){
             System.out.println(m.getKey() + " -> " + m.getValue());
         }
     }
 
-    public  void matchesWonByAllTeams(){
+    public  void matchesWonByAllTeams(List<String[]> matches){
+        HashMap<String,Integer> hm = new HashMap<>();
+        for(int i = 1;i<matches.size();i++){
+            Match m = new Match(matches.get(i));
+            if(m.getWinner()!=null) {
+                hm.put(m.getWinner(), hm.getOrDefault(m.getWinner(), 0) + 1);
+            }
+        }
 
+        for(Map.Entry<String,Integer> m: hm.entrySet()){
+            System.out.println(m.getKey() + " -> " + m.getValue());
+        }
     }
 
     public  void etrasConcededIn2016(){
