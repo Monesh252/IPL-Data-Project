@@ -11,27 +11,13 @@ import com.opencsv.exceptions.CsvException;
 
 
 
-public class IPLProject implements ListOfScenarios{
+public class IPLProject  implements ListOfScenarios{
 
     public static void main(String[] args ) {
-        List<String[]> matches = new ArrayList<>();
-        List<String[]> deliveries = new ArrayList<>();
+        CSV csv = new CSV();
+        List<String[]> deliveries = csv.readDeliveries();
+        List<String[]> matches = csv.readMatches();
 
-        try
-        {
-            CSVReader matchesReader = new CSVReader(new FileReader("src/main/resources/matches.csv"
-            ));
-            CSVReader deliveriesReader = new CSVReader(new FileReader("src/main/resources/deliveries.csv"
-            ));
-            deliveriesReader.readNext();
-            matchesReader.readNext();
-            matches = matchesReader.readAll();
-            deliveries = deliveriesReader.readAll();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void matchesPlayedPerYear(List<String[]> matches){
@@ -127,7 +113,6 @@ public class IPLProject implements ListOfScenarios{
     }
 
     public  void highestRunGetterInEachYear(List<String[]> matches, List<String[]> deliveries, int year) {
-       //cb0969@canarabank.com
        Set<Integer> set = new HashSet<>();
        for (String[] str : matches) {
            Match m = new Match(str);
