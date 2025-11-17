@@ -24,7 +24,6 @@ public class IPLProject implements ListOfScenarios{
             ));
             CSVReader deliveriesReader = new CSVReader(new FileReader("src/main/resources/deliveries.csv"
             ));
-            String line;
             deliveriesReader.readNext();
             matchesReader.readNext();
             matches = matchesReader.readAll();
@@ -35,12 +34,16 @@ public class IPLProject implements ListOfScenarios{
             throw new RuntimeException(e);
         }
 
+        IPLProject ipl = new IPLProject();
+//        ipl.matchesPlayedPerYear(matches);
+        ipl.topEconomicalBowler2015(matches,deliveries,2009);
+        System.out.println(23.00 <3.04);
 
     }
 
     public void matchesPlayedPerYear(List<String[]> matches){
         HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int i = 1;i<matches.size();i++){
+        for(int i = 0;i<matches.size();i++){
             Match m = new Match(matches.get(i));
             hm.put(m.getSeason(),hm.getOrDefault(m.getSeason(), 0)+1);
         }
@@ -87,7 +90,46 @@ public class IPLProject implements ListOfScenarios{
         }
     }
 
-    public  void topEconomicalBowler2015(){
+    public  void topEconomicalBowler2015(List<String[]> matches, List<String[]> deliveries, int year){
+        Set<Integer> set = new HashSet<>();
+        for(String[] str : matches){
+            Match m = new Match(str);
+            if(m.getSeason() == year){
+                set.add(m.getId());
+            }
+        }
 
+        HashMap<String, Integer> totalBalls = new HashMap<>();
+        HashMap<String, Integer> totalRuns = new HashMap<>();
+        for(String[] str : deliveries){
+            Deliveries d = new Deliveries(str);
+            if(set.contains(d.getMatchId())){
+                totalRuns.put(d.getBowler(),totalRuns.getOrDefault(d.getBowler(),0)+d.getTotalRuns());
+                if(d.getNoballRuns() == 0 && d.getWideRuns() == 0){
+                    totalBalls.put(d.getBowler(),totalBalls.getOrDefault(d.getBowler(),0) + 1);
+                }
+            }
+        }
+
+        Map<String,Double> runRate = new TreeMap<>();
+        for (String bowler : totalRuns.keySet()) {
+            if (totalBalls.containsKey(bowler)) {
+                int runs = totalRuns.get(bowler);
+                int balls = totalBalls.get(bowler);
+                double economy = (runs * 6.0) / balls;
+                runRate.put(bowler,economy);
+            }
+        }
+
+        List<Map.Entry<String,Double>> list = new ArrayList<>(runRate.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        Map<String,Double> sortedEconomy = new LinkedHashMap<>();
+        for(Map.Entry<String,Double> run : list){
+            sortedEconomy.put(run.getKey(),run.getValue());
+        }
+
+        for(Map.Entry<String,Double> sorted : sortedEconomy.entrySet()){
+            System.out.println(sorted.getKey() + " -> " + String.format("%.2f" ,sorted.getValue()));
+        }
     }
 }
