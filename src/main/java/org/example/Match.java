@@ -2,8 +2,8 @@ package org.example;
 
 public class Match {
 
-    private String id;
-    private String season;
+    private int id;
+    private int season;
     private String city;
     private String date;
     private String team1;
@@ -13,8 +13,8 @@ public class Match {
     private String result;
     private String dl_applied;
     private String winner;
-    private String win_by_runs;
-    private String win_by_wickets;
+    private int win_by_runs;
+    private int win_by_wickets;
     private String player_of_match;
     private String venue;
     private String umpire1;
@@ -23,8 +23,8 @@ public class Match {
 
 
     public Match(String[] data) {
-        this.id = data[0];
-        this.season = data[1];
+        this.id = Integer.parseInt(data[0]);
+        this.season = Integer.parseInt(data[1]);
         this.city = data[2];
         this.date = data[3];
         this.team1 = data[4];
@@ -34,8 +34,8 @@ public class Match {
         this.result = data[8];
         this.dl_applied = data[9];
         this.winner = data[10];
-        this.win_by_runs = data[11];
-        this.win_by_wickets = data[12];
+        this.win_by_runs = Integer.parseInt(data[11]);
+        this.win_by_wickets = Integer.parseInt(data[12]);
         this.player_of_match = data[13];
         this.venue = data[14];
         this.umpire1 = data[15];
@@ -43,11 +43,11 @@ public class Match {
         this.umpire3 = data[17];
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getSeason() {
+    public int getSeason() {
         return season;
     }
 
@@ -59,11 +59,11 @@ public class Match {
         return dl_applied;
     }
 
-    public String getWin_by_runs() {
+    public int getWin_by_runs() {
         return win_by_runs;
     }
 
-    public String getWin_by_wickets() {
+    public int getWin_by_wickets() {
         return win_by_wickets;
     }
 

@@ -3,10 +3,8 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReader.*;
 import com.opencsv.exceptions.CsvException;
@@ -20,6 +18,7 @@ public class IPLProject implements ListOfScenarios{
         List<String[]> deliveries = new ArrayList<>();
         try
         {
+            IPLProject ipl = new IPLProject();
             CSVReader matchesReader = new CSVReader(new FileReader("src/main/resources/matches.csv"
             ));
             CSVReader deliveriesReader = new CSVReader(new FileReader("src/main/resources/deliveries.csv"
@@ -27,6 +26,7 @@ public class IPLProject implements ListOfScenarios{
             String line;
             matches = matchesReader.readAll();
             deliveries = deliveriesReader.readAll();
+            ipl.matchesPlayedPerYear(matches);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (CsvException e) {
@@ -35,7 +35,14 @@ public class IPLProject implements ListOfScenarios{
     }
 
     public void matchesPlayedPerYear(List<String[]> matches){
-
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int i = 1;i<matches.size();i++){
+            Match m = new Match(matches.get(i));
+            hm.put(m.getSeason(),hm.getOrDefault(m.getSeason(), 0)+1);
+        }
+        for(Map.Entry<Integer,Integer> m : hm.entrySet()){
+            System.out.println(m.getKey() + " -> " + m.getValue());
+        }
     }
 
     public  void matchesWonByAllTeams(){
