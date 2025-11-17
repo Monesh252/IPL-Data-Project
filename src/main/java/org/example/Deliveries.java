@@ -2,7 +2,7 @@ package org.example;
 
 public class Deliveries {
 
-    private String matchId;
+    private int matchId;
     private int inning;
     private String battingTeam;
     private String bowlingTeam;
@@ -24,8 +24,9 @@ public class Deliveries {
     private String dismissalKind;
     private String fielder;
 
-    public void Delivery(String[] data) {
-        this.matchId = data[0];
+
+    public  Deliveries(String[] data) {
+        this.matchId = Integer.parseInt(data[0]);
         this.inning = Integer.parseInt(data[1]);
         this.battingTeam = data[2];
         this.bowlingTeam = data[3];
@@ -43,12 +44,12 @@ public class Deliveries {
         this.batsmanRuns = Integer.parseInt(data[15]);
         this.extraRuns = Integer.parseInt(data[16]);
         this.totalRuns = Integer.parseInt(data[17]);
-        this.playerDismissed = data[18];
-        this.dismissalKind = data[19];
-        this.fielder = data[20];
+        this.playerDismissed = data.length > 18 ? data[18] : "";
+        this.dismissalKind = data.length > 19 ? data[19] : "";
+        this.fielder = data.length > 20 ? data[20] : "";
     }
 
-    public String getMatchId() {
+    public int getMatchId() {
         return matchId;
     }
 

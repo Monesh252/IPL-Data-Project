@@ -1,12 +1,13 @@
 package org.example;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ListOfScenarios {
 
     void matchesPlayedPerYear(List<String[]> matches);
     void matchesWonByAllTeams(List<String[]> matches);
-    void etrasConcededIn2016();
+    void etrasConcededPerYear(List<String[]> matches,List<String[]> deliveries, int year);
     void topEconomicalBowler2015();
 
 }
