@@ -17,10 +17,12 @@ public class IPLProject  implements ListOfScenarios{
         CSV csv = new CSV();
         List<String[]> deliveries = csv.readDeliveries();
         List<String[]> matches = csv.readMatches();
+        IPLProject ipl = new IPLProject();
 
     }
 
     public void matchesPlayedPerYear(List<String[]> matches){
+        //Hashmap to store the season in key and count the matches in value
         HashMap<Integer,Integer> hm = new HashMap<>();
         for(int i = 0;i<matches.size();i++){
             Match m = new Match(matches.get(i));
@@ -34,10 +36,11 @@ public class IPLProject  implements ListOfScenarios{
     }
 
     public  void matchesWonByAllTeams(List<String[]> matches){
+        //Hashmap to store the winner in the key and number of matches they won in value
         HashMap<String,Integer> hm = new HashMap<>();
         for(int i = 1;i<matches.size();i++){
             Match m = new Match(matches.get(i));
-            if(!m.getWinner().isEmpty()) {
+            if(!m.getWinner().isEmpty()) {//if winner is empty it is a no result match so we are avoiding that
                 hm.put(m.getWinner(), hm.getOrDefault(m.getWinner(), 0) + 1);
             }
         }
@@ -48,6 +51,9 @@ public class IPLProject  implements ListOfScenarios{
     }
 
     public void etrasConcededPerYear(List<String[]> matches, List<String[]> deliveries, int year){
+        //Set to store the match id present in the particular year
+        //We use set instead of list because set will do direct access with the help of hashcode
+        //whereas list will check one by one
         HashSet<Integer> set = new HashSet<>();
         for(String[] str : matches){
             Match m = new Match(str);
@@ -56,6 +62,7 @@ public class IPLProject  implements ListOfScenarios{
             }
         }
 
+        //Using hashmap to store the bowling team in the key and counting extra runs in the value
         HashMap<String , Integer> map = new HashMap<>();
         for(String[] str : deliveries){
             Deliveries d = new Deliveries(str);
@@ -70,6 +77,9 @@ public class IPLProject  implements ListOfScenarios{
     }
 
     public  void topEconomicalBowler2015(List<String[]> matches, List<String[]> deliveries, int year){
+        //Set to store the match id present in the particular year
+        //We use set instead of list because set will do direct access with the help of hashcode
+        //whereas list will check one by one
         Set<Integer> set = new HashSet<>();
         for(String[] str : matches){
             Match m = new Match(str);
@@ -78,8 +88,8 @@ public class IPLProject  implements ListOfScenarios{
             }
         }
 
-        HashMap<String, Integer> totalBalls = new HashMap<>();
-        HashMap<String, Integer> totalRuns = new HashMap<>();
+        HashMap<String, Integer> totalBalls = new HashMap<>();//Storing the player name and total number of balls he bowled
+        HashMap<String, Integer> totalRuns = new HashMap<>();//Storing the player name and total runs he conceded
         for(String[] str : deliveries){
             Deliveries d = new Deliveries(str);
             if(set.contains(d.getMatchId())){
@@ -90,6 +100,7 @@ public class IPLProject  implements ListOfScenarios{
             }
         }
 
+        //Calculating the economy of the bowler and storing it in the runRate map
         Map<String,Double> runRate = new TreeMap<>();
         for (String bowler : totalRuns.keySet()) {
             if (totalBalls.containsKey(bowler)) {
@@ -112,7 +123,11 @@ public class IPLProject  implements ListOfScenarios{
         }
     }
 
+    //Own Scenario
     public  void highestRunGetterInEachYear(List<String[]> matches, List<String[]> deliveries, int year) {
+        //Set to store the match id present in the particular year
+        //We use set instead of list because set will do direct access with the help of hashcode
+        //whereas list will check one by one
        Set<Integer> set = new HashSet<>();
        for (String[] str : matches) {
            Match m = new Match(str);
@@ -121,6 +136,7 @@ public class IPLProject  implements ListOfScenarios{
            }
        }
 
+       //Storing total runs scored by the batsman
        HashMap<String, Integer> totalRuns = new HashMap<>();
        for (String[] str : deliveries) {
            Deliveries d = new Deliveries(str);
@@ -129,6 +145,7 @@ public class IPLProject  implements ListOfScenarios{
            }
        }
 
+       //Sorting the map
        List<Map.Entry<String,Integer>> list = new ArrayList<>(totalRuns.entrySet());
        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
        Map<String,Integer> sortedEconomy = new LinkedHashMap<>();
