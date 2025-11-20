@@ -1,7 +1,6 @@
 package org.example;
 
-public class Match {
-
+public class Matches {
     private int id;
     private int season;
     private String city;
@@ -21,26 +20,76 @@ public class Match {
     private String umpire2;
     private String umpire3;
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public Match(String[] data) {
-        this.id = Integer.parseInt(data[0]);
-        this.season = Integer.parseInt(data[1]);
-        this.city = data[2];
-        this.date = data[3];
-        this.team1 = data[4];
-        this.team2 = data[5];
-        this.tossWinner = data[6];
-        this.tossDecision = data[7];
-        this.result = data[8];
-        this.dl_applied = data[9];
-        this.winner = data[10];
-        this.win_by_runs = Integer.parseInt(data[11]);
-        this.win_by_wickets = Integer.parseInt(data[12]);
-        this.player_of_match = data[13];
-        this.venue = data[14];
-        this.umpire1 = data[15];
-        this.umpire2 = data[16];
-        this.umpire3 = data[17];
+    public void setSeason(int season) {
+        this.season = season;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTeam1(String team1) {
+        this.team1 = team1;
+    }
+
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
+
+    public void setTossWinner(String tossWinner) {
+        this.tossWinner = tossWinner;
+    }
+
+    public void setTossDecision(String tossDecision) {
+        this.tossDecision = tossDecision;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public void setDl_applied(String dl_applied) {
+        this.dl_applied = dl_applied;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public void setWin_by_runs(int win_by_runs) {
+        this.win_by_runs = win_by_runs;
+    }
+
+    public void setWin_by_wickets(int win_by_wickets) {
+        this.win_by_wickets = win_by_wickets;
+    }
+
+    public void setPlayer_of_match(String player_of_match) {
+        this.player_of_match = player_of_match;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public void setUmpire1(String umpire1) {
+        this.umpire1 = umpire1;
+    }
+
+    public void setUmpire2(String umpire2) {
+        this.umpire2 = umpire2;
+    }
+
+    public void setUmpire3(String umpire3) {
+        this.umpire3 = umpire3;
     }
 
     public int getId() {

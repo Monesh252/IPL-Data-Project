@@ -1,7 +1,6 @@
 package org.example;
 
 public class Deliveries {
-
     private int matchId;
     private int inning;
     private String battingTeam;
@@ -11,7 +10,7 @@ public class Deliveries {
     private String batsman;
     private String nonStriker;
     private String bowler;
-    private  int isSuperOver;
+    private int isSuperOver;
     private int wideRuns;
     private int byeRuns;
     private int legByeRuns;
@@ -24,29 +23,88 @@ public class Deliveries {
     private String dismissalKind;
     private String fielder;
 
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
+    }
 
-    public  Deliveries(String[] data) {
-        this.matchId = Integer.parseInt(data[0]);
-        this.inning = Integer.parseInt(data[1]);
-        this.battingTeam = data[2];
-        this.bowlingTeam = data[3];
-        this.over = Integer.parseInt(data[4]);
-        this.ball = Integer.parseInt(data[5]);
-        this.batsman = data[6];
-        this.nonStriker = data[7];
-        this.bowler = data[8];
-        this.isSuperOver = Integer.parseInt(data[9]);
-        this.wideRuns = Integer.parseInt(data[10]);
-        this.byeRuns = Integer.parseInt(data[11]);
-        this.legByeRuns = Integer.parseInt(data[12]);
-        this.noballRuns = Integer.parseInt(data[13]);
-        this.penaltyRuns = Integer.parseInt(data[14]);
-        this.batsmanRuns = Integer.parseInt(data[15]);
-        this.extraRuns = Integer.parseInt(data[16]);
-        this.totalRuns = Integer.parseInt(data[17]);
-        this.playerDismissed = data.length > 18 ? data[18] : "";
-        this.dismissalKind = data.length > 19 ? data[19] : "";
-        this.fielder = data.length > 20 ? data[20] : "";
+    public void setInning(int inning) {
+        this.inning = inning;
+    }
+
+    public void setBattingTeam(String battingTeam) {
+        this.battingTeam = battingTeam;
+    }
+
+    public void setBowlingTeam(String bowlingTeam) {
+        this.bowlingTeam = bowlingTeam;
+    }
+
+    public void setOver(int over) {
+        this.over = over;
+    }
+
+    public void setBall(int ball) {
+        this.ball = ball;
+    }
+
+    public void setBatsman(String batsman) {
+        this.batsman = batsman;
+    }
+
+    public void setNonStriker(String nonStriker) {
+        this.nonStriker = nonStriker;
+    }
+
+    public void setBowler(String bowler) {
+        this.bowler = bowler;
+    }
+
+    public void setIsSuperOver(int isSuperOver) {
+        this.isSuperOver = isSuperOver;
+    }
+
+    public void setWideRuns(int wideRuns) {
+        this.wideRuns = wideRuns;
+    }
+
+    public void setByeRuns(int byeRuns) {
+        this.byeRuns = byeRuns;
+    }
+
+    public void setLegByeRuns(int legByeRuns) {
+        this.legByeRuns = legByeRuns;
+    }
+
+    public void setNoballRuns(int noballRuns) {
+        this.noballRuns = noballRuns;
+    }
+
+    public void setPenaltyRuns(int penaltyRuns) {
+        this.penaltyRuns = penaltyRuns;
+    }
+
+    public void setBatsmanRuns(int batsmanRuns) {
+        this.batsmanRuns = batsmanRuns;
+    }
+
+    public void setExtraRuns(int extraRuns) {
+        this.extraRuns = extraRuns;
+    }
+
+    public void setTotalRuns(int totalRuns) {
+        this.totalRuns = totalRuns;
+    }
+
+    public void setPlayerDismissed(String playerDismissed) {
+        this.playerDismissed = playerDismissed;
+    }
+
+    public void setDismissalKind(String dismissalKind) {
+        this.dismissalKind = dismissalKind;
+    }
+
+    public void setFielder(String fielder) {
+        this.fielder = fielder;
     }
 
     public int getMatchId() {
@@ -133,4 +191,3 @@ public class Deliveries {
         return fielder;
     }
 }
-
