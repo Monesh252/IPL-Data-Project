@@ -48,6 +48,7 @@ public class Main {
         final String deliveriesFile = "src/main/resources/deliveries.csv";
         final List<Matches> matchesData = Collections.unmodifiableList(readMatches(matchesFile));
         final List<Deliveries> deliveriesData = Collections.unmodifiableList(readDeliveries(deliveriesFile));
+        findTopEconomicalBowler(matchesData,deliveriesData,2015);
     }
 
     public static List<Matches> readMatches(String file) throws IOException {
