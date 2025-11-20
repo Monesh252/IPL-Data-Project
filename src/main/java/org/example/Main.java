@@ -48,12 +48,6 @@ public class Main {
         final String deliveriesFile = "src/main/resources/deliveries.csv";
         final List<Matches> matchesData = Collections.unmodifiableList(readMatches(matchesFile));
         final List<Deliveries> deliveriesData = Collections.unmodifiableList(readDeliveries(deliveriesFile));
-
-        matchesPlayedPerYear(matchesData);
-        matchesWonByAllTeams(matchesData);
-        extrasConcededPerYear(matchesData,deliveriesData,2009);
-        topEconomicalBowler(matchesData,deliveriesData,2009);
-        highestRunGetterInEachYear(matchesData,deliveriesData,2016);
     }
 
     public static List<Matches> readMatches(String file) throws IOException {
@@ -156,50 +150,45 @@ public class Main {
         return deliveryList;
     }
 
-    public static void matchesPlayedPerYear(List<Matches> matches){
-        Map<Integer,Integer> hm = new TreeMap<>();
+    public static void findMatchesPlayedPerYear(List<Matches> matches){
+        Map<Integer,Integer> totalMatches = new TreeMap<>();
         for(Matches match : matches){
-            hm.put(match.getSeason(),hm.getOrDefault(match.getSeason(), 0)+1);
+            totalMatches.put(match.getSeason(), totalMatches.getOrDefault(match.getSeason(), 0)+1);
         }
 
-        for(Map.Entry<Integer,Integer> m : hm.entrySet()){
+        for(Map.Entry<Integer,Integer> m : totalMatches.entrySet()){
                 System.out.println(m.getKey() + " -> " + m.getValue());
         }
     }
 
-    public static void matchesWonByAllTeams(List<Matches> matches){
-        Map<String,Integer> hm = new HashMap<>();
+    public static void findMatchesWonByAllTeams(List<Matches> matches){
+        Map<String,Integer> totalWins = new HashMap<>();
 
         for(Matches match : matches){
             if(!match.getWinner().isEmpty()) {//if winner is empty it is a no result match so we are avoiding that
-                hm.put(match.getWinner(), hm.getOrDefault(match.getWinner(), 0) + 1);
+                totalWins.put(match.getWinner(), totalWins.getOrDefault(match.getWinner(), 0) + 1);
             }
         }
 
-        List<Map.Entry<String,Integer>> list = new ArrayList<>(hm.entrySet());
+        List<Map.Entry<String,Integer>> list = new ArrayList<>(totalWins.entrySet());
         list.sort(Map.Entry.<String,Integer>comparingByValue().reversed());
-        Map<String,Integer> sortedMap = new LinkedHashMap<>();
+        totalWins = new HashMap<>();
 
         for(Map.Entry<String,Integer> value : list){
-            sortedMap.put(value.getKey(),value.getValue());
+            totalWins.put(value.getKey(),value.getValue());
         }
 
-        for(Map.Entry<String,Integer> entry: sortedMap.entrySet()){
+        for(Map.Entry<String,Integer> entry: totalWins.entrySet()){
             System.out.printf("%-28s -> %-3d wins\n",entry.getKey(),entry.getValue());
         }
     }
 
-    public static void extrasConcededPerYear(List<Matches> matches, List<Deliveries> deliveries, int year){
-        HashSet<Integer> set = new HashSet<>();
-        for(Matches match : matches){
-            if(match.getSeason() == year){
-                set.add(match.getId());
-            }
-        }
+    public static void findExtrasConcededPerYear(List<Matches> matches, List<Deliveries> deliveries, int year){
+        Set<Integer> matchId = matchId(matches,year);
 
         HashMap<String , Integer> extras = new HashMap<>();
         for(Deliveries delivery : deliveries){
-            if(set.contains(delivery.getMatchId())){
+            if(matchId.contains(delivery.getMatchId()) && delivery.getIsSuperOver() == 0){
                 extras.put(delivery.getBowlingTeam(), extras.getOrDefault(delivery.getBowlingTeam(),0) + delivery.getExtraRuns());
             }
         }
@@ -209,19 +198,14 @@ public class Main {
         }
     }
 
-    public static void topEconomicalBowler(List<Matches> matches, List<Deliveries> deliveries, int year){
-        Set<Integer> set = new HashSet<>();
-        for(Matches match : matches){
-            if(match.getSeason() == year){
-                set.add(match.getId());
-            }
-        }
+    public static void findTopEconomicalBowler(List<Matches> matches, List<Deliveries> deliveries, int year){
+        Set<Integer> matchId = matchId(matches,year);
 
         HashMap<String, Integer> totalBalls = new HashMap<>();
         HashMap<String, Integer> totalRuns = new HashMap<>();
 
         for(Deliveries delivery : deliveries){
-            if(set.contains(delivery.getMatchId())){
+            if(matchId.contains(delivery.getMatchId())){
                 totalRuns.put(delivery.getBowler(),totalRuns.getOrDefault(delivery.getBowler(),0)+delivery.getTotalRuns());
                 if(delivery.getNoballRuns() == 0 && delivery.getWideRuns() == 0){
                     totalBalls.put(delivery.getBowler(),totalBalls.getOrDefault(delivery.getBowler(),0) + 1);
@@ -229,54 +213,59 @@ public class Main {
             }
         }
 
-        Map<String,Double> runRate = new TreeMap<>();
+        Map<String,Double> economy = new HashMap<>();
         for (String bowler : totalRuns.keySet()) {
             if (totalBalls.containsKey(bowler)) {
                 int runs = totalRuns.get(bowler);
                 int balls = totalBalls.get(bowler);
-                double economy = (runs * 6.0) / balls;
-                runRate.put(bowler,economy);
+                double economyCalculation = (runs * 6.0) / balls;
+                economy.put(bowler,economyCalculation);
             }
         }
 
-        List<Map.Entry<String,Double>> list = new ArrayList<>(runRate.entrySet());
+        List<Map.Entry<String,Double>> list = new ArrayList<>(economy.entrySet());
         list.sort(Map.Entry.comparingByValue());
-        Map<String,Double> sortedEconomy = new LinkedHashMap<>();
+        economy = new LinkedHashMap<>();
         for(Map.Entry<String,Double> run : list){
-            sortedEconomy.put(run.getKey(),run.getValue());
+            economy.put(run.getKey(),run.getValue());
         }
 
-        for(Map.Entry<String,Double> entry : sortedEconomy.entrySet()){
+        for(Map.Entry<String,Double> entry : economy.entrySet()){
             System.out.printf("%-18s -> %-4.2f \n",entry.getKey(),entry.getValue());
         }
     }
 
-    public static void highestRunGetterInEachYear(List<Matches> matches, List<Deliveries> deliveries, int year) {
-       Set<Integer> set = new HashSet<>();
-       for (Matches match : matches) {
-           if (match.getSeason() == year) {
-               set.add(match.getId());
-           }
-       }
+    public static void findHighestRunGetterInAYear(List<Matches> matches, List<Deliveries> deliveries, int year){
+        Set<Integer> matchId = matchId(matches,year);
 
        HashMap<String, Integer> totalRuns = new HashMap<>();
        for (Deliveries delivery : deliveries) {
-           if (set.contains(delivery.getMatchId())) {
+           if (matchId.contains(delivery.getMatchId())) {
                totalRuns.put(delivery.getBatsman(), totalRuns.getOrDefault(delivery.getBatsman(), 0) + delivery.getTotalRuns());
            }
        }
 
        List<Map.Entry<String,Integer>> list = new ArrayList<>(totalRuns.entrySet());
        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-       Map<String,Integer> sortedEconomy = new LinkedHashMap<>();
+       totalRuns = new LinkedHashMap<>();
        for(Map.Entry<String,Integer> run : list){
-           sortedEconomy.put(run.getKey(),run.getValue());
+           totalRuns.put(run.getKey(),run.getValue());
        }
 
-       if(!sortedEconomy.isEmpty()){
-           Map.Entry<String,Integer> top = sortedEconomy.entrySet().iterator().next();
+       if(!totalRuns.isEmpty()){
+           Map.Entry<String,Integer> top = totalRuns.entrySet().iterator().next();
            System.out.printf("%-18s -> %4d\n", top.getKey(), top.getValue());
        }
+    }
+
+    public static Set<Integer> matchId(List<Matches> matches, int year){
+        Set<Integer> matchId = new HashSet<>();
+        for(Matches match : matches){
+            if(match.getSeason() == year){
+                matchId.add(match.getId());
+            }
+        }
+        return matchId;
     }
 }
 
