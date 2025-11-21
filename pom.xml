@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>IPL-Mini-Project-Monesh</artifactId>
+    <artifactId>iplproject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>

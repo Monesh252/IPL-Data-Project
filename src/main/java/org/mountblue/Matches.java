@@ -1,4 +1,4 @@
-package org.example;
+package org.mountblue;
 
 public class Matches {
     private int id;
@@ -10,11 +10,11 @@ public class Matches {
     private String tossWinner;
     private String tossDecision;
     private String result;
-    private String dl_applied;
+    private String dlApplied;
     private String winner;
-    private int win_by_runs;
-    private int win_by_wickets;
-    private String player_of_match;
+    private int winByRuns;
+    private int winByWickets;
+    private String playerOfMatch;
     private String venue;
     private String umpire1;
     private String umpire2;
@@ -57,7 +57,7 @@ public class Matches {
     }
 
     public void setDl_applied(String dl_applied) {
-        this.dl_applied = dl_applied;
+        this.dlApplied = dl_applied;
     }
 
     public void setWinner(String winner) {
@@ -65,15 +65,15 @@ public class Matches {
     }
 
     public void setWin_by_runs(int win_by_runs) {
-        this.win_by_runs = win_by_runs;
+        this.winByRuns = win_by_runs;
     }
 
     public void setWin_by_wickets(int win_by_wickets) {
-        this.win_by_wickets = win_by_wickets;
+        this.winByWickets = win_by_wickets;
     }
 
     public void setPlayer_of_match(String player_of_match) {
-        this.player_of_match = player_of_match;
+        this.playerOfMatch = player_of_match;
     }
 
     public void setVenue(String venue) {
@@ -105,19 +105,19 @@ public class Matches {
     }
 
     public String getDl_applied() {
-        return dl_applied;
+        return dlApplied;
     }
 
     public int getWin_by_runs() {
-        return win_by_runs;
+        return winByRuns;
     }
 
     public int getWin_by_wickets() {
-        return win_by_wickets;
+        return winByWickets;
     }
 
     public String getPlayer_of_match() {
-        return player_of_match;
+        return playerOfMatch;
     }
 
     public String getVenue() {
