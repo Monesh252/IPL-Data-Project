@@ -49,8 +49,6 @@ public class Main {
         final String deliveriesFile = "src/main/resources/deliveries.csv";
         final List<Matches> matchesData = Collections.unmodifiableList(readMatches(matchesFile));
         final List<Deliveries> deliveriesData = Collections.unmodifiableList(readDeliveries(deliveriesFile));
-
-        JDBCProject.findMatchesWonByAllTeams();
     }
 
     public static List<Matches> readMatches(String file) {
